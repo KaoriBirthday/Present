@@ -11,85 +11,122 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #3B0B71;
-    color: #FFF;
+    background-color: #f5f5dc; /* Cream background */
+    color: #333; /* Dark text for readability */
     font-family: Arial, sans-serif;
-  }
-  .countdown-container {
-    text-align: center;
-    background-color: #240c4b;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-  }
-  h1, #happyBirthdayText {
-    font-size: 24px;
     margin: 0;
   }
+
+  .countdown-container {
+    text-align: center;
+    background-color: #fff; /* White container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    width: 400px;
+  }
+
+  h1, #happyBirthdayText {
+    font-size: 6vw; /* Responsive font size for mobile */
+    margin: 0;
+    color: #333; /* Dark text color */
+  }
+
   #happyBirthdayText {
     display: none; /* Initially hidden */
   }
+
   .countdown {
-    font-size: 48px;
+    font-size: 10vw;
     letter-spacing: 2px;
     margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center;
+    gap: 10px;
   }
+
+  .time-segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .unit {
-    font-size: 12px;
-    display: inline-block;
-    margin: 0 10px;
+    font-size: 3vw; /* Smaller font for mobile */
+    margin-top: 5px;
+    color: #666; /* Light text color for units */
   }
-  
+
   /* Gift Box Animation */
   .gift-box {
     display: none;
     position: relative;
     margin: 20px auto;
-    width: 80px;
-    height: 80px;
-    background-color: #ff66b2;
+    width: 18vw; /* Larger width for better visibility */
+    height: 18vw; /* Larger height */
+    max-width: 100px; /* Limit maximum size */
+    max-height: 100px;
+    background-color: #ffdab9; /* Light peach color */
     border-radius: 5px;
     cursor: pointer;
     animation: bounce 1s infinite;
   }
+
   .gift-box::before, .gift-box::after {
     content: "";
     position: absolute;
     background-color: #FFF;
   }
+
   .gift-box::before {
-    width: 80px;
-    height: 15px;
-    top: 35px;
+    width: 18vw;
+    height: 3vw;
+    max-width: 100px;
+    max-height: 15px;
+    top: 35%;
+    left: 0;
   }
+
   .gift-box::after {
-    height: 80px;
-    width: 15px;
-    left: 35px;
+    width: 3vw;
+    height: 18vw;
+    max-width: 15px;
+    max-height: 100px;
+    left: 35%;
+    top: 0;
   }
+
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
 
-  /* Image Transition */
+  /* Centered Image Container */
   .image-container {
     display: none;
     text-align: center;
+    margin-top: 20px;
   }
+
   .image-container img {
-    width: 150px;
+    width: 90vw; /* Increased image size for maximum impact */
+    max-width: 300px; /* Maximum width on larger screens */
     height: auto;
     border-radius: 10px;
     transition: transform 1s ease-in-out, opacity 1s ease-in-out;
   }
+
   .fade-out {
     opacity: 0;
     transform: scale(0.9) rotate(-10deg);
   }
+
   .wow-animation {
     animation: wowEffect 1.5s ease forwards;
   }
+
   @keyframes wowEffect {
     0% {
       opacity: 0;
@@ -104,25 +141,48 @@
       transform: scale(1) rotate(0deg);
     }
   }
+
+  /* Responsive Layout for Mobile */
+  @media (max-width: 600px) {
+    .countdown {
+      flex-direction: row; /* Align all time segments in one line */
+    }
+    .time-segment {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 </style>
 </head>
 <body>
 
 <div class="countdown-container" id="countdownContainer">
   <h1 id="countdownTitle">Countdown to Kaori's Birthday!</h1>
-  <h1 id="happyBirthdayText">Happy Birthday, Kaori!</h1>
+  <h1 id="happyBirthdayText"> Happy Birthday, Kaori! </h1>
   
   <div class="countdown" id="countdown">
-    <span id="days">00</span><span class="unit">days</span>
-    <span id="hours">00</span><span class="unit">hours</span>
-    <span id="minutes">00</span><span class="unit">minutes</span>
-    <span id="seconds">00</span><span class="unit">seconds</span>
+    <div class="time-segment">
+      <span id="days">00</span>
+      <span class="unit">days</span>
+    </div>
+    <div class="time-segment">
+      <span id="hours">00</span>
+      <span class="unit">hours</span>
+    </div>
+    <div class="time-segment">
+      <span id="minutes">00</span>
+      <span class="unit">minutes</span>
+    </div>
+    <div class="time-segment">
+      <span id="seconds">00</span>
+      <span class="unit">seconds</span>
+    </div>
   </div>
   
   <!-- Gift Box Animation -->
   <div class="gift-box" id="giftBox" onclick="showBirthdayMessage()"></div>
 
-  <!-- Images -->
+  <!-- Centered Image Container -->
   <div class="image-container" id="imageContainer">
     <img src="kaori_real.jpg" alt="Kaori" id="realImage">
     <img src="kaori_animation.png" alt="Kaori Cartoon" id="cartoonImage" style="display: none;">
@@ -179,7 +239,8 @@
     const imageContainer = document.getElementById("imageContainer");
     const realImage = document.getElementById("realImage");
 
-    imageContainer.style.display = "block"; // Show the image container
+    imageContainer.style.display = "flex"; // Center the image container
+    imageContainer.style.justifyContent = "center";
     realImage.style.display = "block"; // Show real image
 
     // Transition to cartoon image after a delay
