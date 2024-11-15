@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaori Birthday Countdown</title>
+<style>
+  /* General Styling */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #3B0B71;
+    color: #FFF;
+    font-family: Arial, sans-serif;
+  }
+  .countdown-container {
+    text-align: center;
+    background-color: #240c4b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  }
+  h1, #happyBirthdayText {
+    font-size: 24px;
+    margin: 0;
+  }
+  #happyBirthdayText {
+    display: none; /* Initially hidden */
+  }
+  .countdown {
+    font-size: 48px;
+    letter-spacing: 2px;
+    margin: 20px 0;
+  }
+  .unit {
+    font-size: 12px;
+    display: inline-block;
+    margin: 0 10px;
+  }
+  
+  /* Gift Box Animation */
+  .gift-box {
+    display: none;
+    position: relative;
+    margin: 20px auto;
+    width: 80px;
+    height: 80px;
+    background-color: #ff66b2;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: bounce 1s infinite;
+  }
+  .gift-box::before, .gift-box::after {
+    content: "";
+    position: absolute;
+    background-color: #FFF;
+  }
+  .gift-box::before {
+    width: 80px;
+    height: 15px;
+    top: 35px;
+  }
+  .gift-box::after {
+    height: 80px;
+    width: 15px;
+    left: 35px;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Image Transition */
+  .image-container {
+    display: none;
+    text-align: center;
+  }
+  .image-container img {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+  }
+  .fade-out {
+    opacity: 0;
+    transform: scale(0.9) rotate(-10deg);
+  }
+  .wow-animation {
+    animation: wowEffect 1.5s ease forwards;
+  }
+  @keyframes wowEffect {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(-10deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="countdown-container" id="countdownContainer">
+  <h1 id="countdownTitle">Countdown to Kaori's Birthday!</h1>
+  <h1 id="happyBirthdayText">Happy Birthday, Kaori!</h1>
+  
+  <div class="countdown" id="countdown">
+    <span id="days">00</span><span class="unit">days</span>
+    <span id="hours">00</span><span class="unit">hours</span>
+    <span id="minutes">00</span><span class="unit">minutes</span>
+    <span id="seconds">00</span><span class="unit">seconds</span>
+  </div>
+  
+  <!-- Gift Box Animation -->
+  <div class="gift-box" id="giftBox" onclick="showBirthdayMessage()"></div>
+
+  <!-- Images -->
+  <div class="image-container" id="imageContainer">
+    <img src="kaori_real.jpg" alt="Kaori" id="realImage">
+    <img src="kaori_animation.png" alt="Kaori Cartoon" id="cartoonImage" style="display: none;">
+  </div>
+</div>
+
+<script>
+  // Countdown Timer
+  const countdownDate = new Date("2023-11-17T00:00:00+07:00").getTime();
+  
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    // Calculate time components
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display countdown
+    document.getElementById("days").textContent = days.toString().padStart(2, '0');
+    document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+    document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+    document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+
+    // When the countdown is finished
+    if (distance < 0) {
+      clearInterval(timer);
+      document.getElementById("countdown").style.display = "none";
+      document.getElementById("giftBox").style.display = "block"; // Show the gift box
+    }
+  }, 1000);
+
+  // Show Happy Birthday Message
+  function showBirthdayMessage() {
+    // Hide countdown elements
+    document.getElementById("countdownTitle").style.display = "none";
+    document.getElementById("countdown").style.display = "none";
+    document.getElementById("giftBox").style.display = "none"; // Hide gift box after click
+    
+    // Show "Happy Birthday" text
+    document.getElementById("happyBirthdayText").style.display = "block";
+    
+    // Proceed to show the real image after a delay
+    setTimeout(showRealImage, 1500);
+  }
+
+  // Show Kaori's Real Image
+  function showRealImage() {
+    // Hide "Happy Birthday" text
+    document.getElementById("happyBirthdayText").style.display = "none";
+
+    const imageContainer = document.getElementById("imageContainer");
+    const realImage = document.getElementById("realImage");
+
+    imageContainer.style.display = "block"; // Show the image container
+    realImage.style.display = "block"; // Show real image
+
+    // Transition to cartoon image after a delay
+    setTimeout(transformToCartoon, 2000);
+  }
+
+  // Transform to Cartoon Image
+  function transformToCartoon() {
+    const realImage = document.getElementById("realImage");
+    const cartoonImage = document.getElementById("cartoonImage");
+
+    // Add fade-out effect to the real image
+    realImage.classList.add("fade-out");
+
+    // After fade-out, show cartoon image with animation
+    setTimeout(() => {
+      realImage.style.display = "none";
+      cartoonImage.style.display = "block";
+      cartoonImage.classList.add("wow-animation");
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
