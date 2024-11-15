@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2d0734;
+    color: #fff;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2d0734;
+    color: #fff;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .countdown h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .countdown p {
+    margin-bottom: 2rem;
+  }
+  
+  .time {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .time div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .time span:first-child {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .surprise {
+    position: relative;
+  }
+  
+  .box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2d0734; /* Matches the container's background */
+  }
+  
+  .realImage, .animatedImage {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    max-width: 100%; /* Ensures the image fits within the viewport if it's very large */
+  }
+  
+  .realImage {
+    animation: popUp 1s ease-in-out forwards;
+  }
+  
+  .animatedImage {
+    opacity: 0;
+    position: absolute;
+    animation: transformAnimation 1s 1s ease-in-out forwards;
+  }
+  
+  @keyframes popUp {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes transformAnimation {
+    0% { opacity: 0; transform: scale(0.8) rotate(0deg); }
+    100% { opacity: 1; transform: scale(1) rotate(360deg); }
+  }
+  
